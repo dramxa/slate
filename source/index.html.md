@@ -8,16 +8,12 @@ language_tabs: # must be one of https://git.io/vQNgJ
 toc_footers:
   - <a href='https://user.kod.mobi'>Sign Up for a Developer Key</a>
 
-includes:
-  - errors
-
-search: true
 
 code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: Documentation for the kod.mobi API
 ---
 
 # kod.mobi 
@@ -27,17 +23,6 @@ Client API (V2)
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
 
 ```shell
 # With shell, you can just pass the correct header with each request
