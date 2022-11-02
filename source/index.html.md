@@ -6,8 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+  - <a href='https://user.kod.mobi'>Sign Up for a Developer Key</a>
 
 includes:
   - errors
@@ -66,181 +65,144 @@ fetch("api_endpoint_here", requestOptions)
 
 kod.mobi uses API keys to allow access to the API.
 
-`Authorization: meowmeowmeow`
+`x-api-key: Your-Secret-Account-Token`
 
 <aside class="notice">
 You must replace <code>Your-Secret-Account-Token</code> with your personal API key.
 </aside>
 
-# Kittens
+# Message
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Create Code
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET 'https://api.kod.mobi/api/v2/message/create?phone=79522966236&type=telegram'
 ```
 
 ```javascript
-const kittn = require('kittn');
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+fetch("https://api.kod.mobi/api/v2/message/create?phone=79522966236&type=telegram", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://api.kod.mobi/api/v2/message/create?phone=79522966236&type=telegram`
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Params | Value | Default | Required
+------ | ----- | ------- | --------
+phone | number/номер должен начинаться с 7, +7 или 8 | - | true
+type | string/in:sms,whatsapp,telegram | whatsapp(если пользователь не найден, если найден то будет выбран тот канал который он часто использует) | false
+code | string | рандомный четырехзначный код | false
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Send Code
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET 'https://api.kod.mobi/api/v2/message/send?session_id=&type=whatsapp' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json'
 ```
 
 ```javascript
-const kittn = require('kittn');
+var myHeaders = new Headers();
+myHeaders.append("Accept", "application/json");
+myHeaders.append("Content-Type", "application/json");
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://api.kod.mobi/api/v2/message/send?session_id=&type=whatsapp", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET https://api.kod.mobi/api/v2/message/send?session_id=&type=whatsapp`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Params | Value | Default | Required
+------ | ----- | ------- | --------
+session_id | string | - | true
+type | string/in:sms,whatsapp,telegram | whatsapp(если пользователь не найден, если найден то будет выбран тот канал который он часто использует) | false
+code | string | рандомный четырехзначный код | false
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## Check Code
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET 'https://api.kod.mobi/api/v2/message/check?session_id=&code=7032' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json'
 ```
 
 ```javascript
-const kittn = require('kittn');
+var myHeaders = new Headers();
+myHeaders.append("Accept", "application/json");
+myHeaders.append("Content-Type", "application/json");
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://api.kod.mobi/api/v2/message/check?session_id=&code=7032", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`GET https://api.kod.mobi/api/v2/message/check?session_id=&code=7032`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Params | Value | Required
+------ | ----- | --------
+session_id | string | true
+code | string | true
 
+# Channel
+
+## Check Channel
+
+```shell
+curl --location --request GET 'https://api.kod.mobi/api/v2/channel/check?session_id=&type=telegram'
+```
+
+```javascript
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("https://api.kod.mobi/api/v2/channel/check?session_id=&type=telegram", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+### HTTP Request
+
+`GET https://api.kod.mobi/api/v2/channel/check?session_id=&type=telegram`
+
+### Query Parameters
+
+Params | Value | Required
+------ | ----- | --------
+session_id | string | true
+type | string/in:sms,whatsapp,telegram | true
